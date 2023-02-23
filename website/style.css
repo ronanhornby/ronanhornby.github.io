@@ -1,0 +1,24 @@
+p { display: inline }
+
+.sentences:hover {
+    cursor: pointer;
+    animation-name: sentence_light_up;
+    animation-duration: 0.15s;
+    color: lightblue;
+  }
+  
+  @keyframes sentence_light_up {
+    from {color: black;}
+    to {color: lightblue;}
+  }
+
+  .sentences:not(:hover) {
+    animation-name: sentence_light_off;
+    animation-duration: 0.5s;
+    color: black;
+  }
+  
+  @keyframes sentence_light_off {
+    from {color: lightblue;}
+    to {color: black;}
+  }

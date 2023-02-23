@@ -1,0 +1,199 @@
+import pygame
+import random
+import time
+from playsound import playsound
+
+class solfegeNotes:
+    def __init__(self, name, note, degree, octave):
+        self.name = name
+        self.note = note
+        self.degree = degree
+        self.octave = octave
+
+    def note_play(self):
+        self.note.play()
+
+def assignMode():
+    scale = input("Input the number of the scale or home you want: \n 1. Minor, La (Aeolian) \n 2. Mixolydian, So (Major) \n 3. Lydian, Fa (Major) \n 4. Phrygian, Mi (Minor) \n 5. Dorian, Re (Minor) \n 6. Major, Do (Ionian) \n 7. Locrian, Ti (Minor) \n \n")
+    return int(scale)
+
+def degreeToOne(num):
+    if num >= 8:
+        num = num - 7
+    return num
+
+
+# WAV decleration
+
+pygame.mixer.init()
+E3 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/e3.wav")
+FSHARP3 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/f-3.wav")
+G3 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/g3.wav")
+A4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/a4.wav")
+B4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/b4.wav")
+C4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/c4.wav")
+D4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/d4.wav")
+
+E4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/e4.wav")
+FSHARP4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/f-4.wav")
+G4 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/g4.wav")
+A5 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/a5.wav")
+B5 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/b5.wav")
+C5 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/c5.wav")
+D5 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/d5.wav")
+
+E5 = pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/e5.wav")
+
+notesarray = [pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/e3.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/f-3.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/g3.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/a4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/b4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/c4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/d4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/e4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/f-4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/g4.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/a5.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/b5.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/c5.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/d5.wav"), pygame.mixer.Sound("C:/ronan/solfege ear trainer/note samples/wav/e5.wav")]
+
+octaveDegree = 0
+
+scale = assignMode()
+
+la = solfegeNotes("La", E4, scale, octaveDegree)
+ti = solfegeNotes("Ti", FSHARP4, degreeToOne(la.degree + 1), octaveDegree)
+do = solfegeNotes("Do", G4, degreeToOne(ti.degree + 1), octaveDegree)
+re = solfegeNotes("Re", A4, degreeToOne(do.degree + 1), octaveDegree)
+mi = solfegeNotes("Mi", B4, degreeToOne(re.degree + 1), octaveDegree)
+fa = solfegeNotes("Fa", C5, degreeToOne(mi.degree + 1), octaveDegree)
+so = solfegeNotes("So", D5, degreeToOne(fa.degree + 1), octaveDegree)
+all = [la, ti, do, re, mi, fa, so]
+
+tick = 0
+while tick < 7:
+    if la.degree == 1 + tick:
+        la.note = notesarray[scale + tick - 1]
+    elif ti.degree == 1 + tick:
+        ti.note = notesarray[scale + tick - 1]
+    elif do.degree == 1 + tick:
+        do.note = notesarray[scale + tick - 1]
+    elif re.degree == 1 + tick:
+        re.note = notesarray[scale + tick - 1]
+    elif mi.degree == 1 + tick:
+        mi.note = notesarray[scale + tick - 1]
+    elif fa.degree == 1 + tick:
+        fa.note = notesarray[scale + tick - 1]
+    elif so.degree == 1 + tick:
+        so.note = notesarray[scale + tick - 1]
+    tick += 1
+
+delay = input("If you would like melodic, enter a time in seconds that you would like to seperate the intervals by: ")
+delay = float(delay)
+
+count = 1
+while count < 8:
+    if la.degree == count:
+        la.note_play()
+    elif ti.degree == count:
+        ti.note_play()
+    elif do.degree == count:
+        do.note_play()
+    elif re.degree == count:
+        re.note_play()
+    elif mi.degree == count:
+        mi.note_play()
+    elif fa.degree == count:
+        fa.note_play()
+    elif so.degree == count:
+        so.note_play()
+    time.sleep(0.25)
+    count += 1
+notesarray[scale + 6].play()
+time.sleep(delay)
+
+a = 1
+while a != 0:
+
+    if la.degree == 1:
+        la.note_play()
+    elif ti.degree == 1:
+        ti.note_play()
+    elif do.degree == 1:
+        do.note_play()
+    elif re.degree == 1:
+        re.note_play()
+    elif mi.degree == 1:
+        mi.note_play()
+    elif fa.degree == 1:
+        fa.note_play()
+    elif so.degree == 1:
+        so.note_play()
+
+    if la.degree == 1:
+        print(la.name)
+    elif ti.degree == 1:
+        print(ti.name)
+    elif do.degree == 1:
+        print(do.name)
+    elif re.degree == 1:
+        print(re.name)
+    elif mi.degree == 1:
+        print(mi.name)
+    elif fa.degree == 1:
+        print(fa.name)
+    elif so.degree == 1:
+        print(so.name) 
+
+    random_number = random.randint(1, 8)
+    time.sleep(delay)
+
+    if random_number == la.degree:
+        la.note_play()
+    elif random_number == ti.degree:
+        ti.note_play()
+    elif random_number == do.degree:
+        do.note_play()
+    elif random_number == re.degree:
+        re.note_play()
+    elif random_number == mi.degree:
+        mi.note_play()
+    elif random_number == fa.degree:
+        fa.note_play()
+    elif random_number == so.degree:
+        so.note_play()
+    elif random_number == 8:
+        notesarray[scale + 6].play()
+    
+    if random_number == la.degree:
+        answerName = la.name
+    elif random_number == ti.degree:
+        answerName = ti.name
+    elif random_number == do.degree:
+        answerName = do.name
+    elif random_number == re.degree:
+        answerName = re.name
+    elif random_number == mi.degree:
+        answerName = mi.name
+    elif random_number == fa.degree:
+        answerName = fa.name
+    elif random_number == so.degree:
+        answerName = so.name
+    elif random_number == 8:
+        if la.degree == 1:
+            octave = "La"
+        elif ti.degree == 1:
+            octave = "Ti"
+        elif do.degree == 1:
+            octave = "Do"
+        elif re.degree == 1:
+            octave = "Re"
+        elif mi.degree == 1:
+            octave = "Mi"
+        elif fa.degree == 1:
+            octave = "Fa"
+        elif so.degree == 1:
+            octave = "So"
+        answerName = octave
+
+   # for person in all:
+    #    print(person.name)
+     #   print(person.degree)
+
+    answerIn = input("Enter the degree you think it is, 1 to ? (check that its the correct name as well), (to terminate the program enter 0): ")
+    answerIn = int(answerIn)
+    if answerIn == random_number:
+        print("\nCorrect! " + str(random_number) + ", " + answerName)
+    elif answerIn == 0:
+        a = 0
+    else:
+        print("\nIncorrect, correct answer was: " + str(random_number) + ", " + answerName)
